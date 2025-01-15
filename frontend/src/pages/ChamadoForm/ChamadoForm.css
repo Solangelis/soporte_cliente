@@ -1,0 +1,90 @@
+.chamado-form-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: var(--secondary-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.chamado-form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+.error-message {
+    background-color: var(--accent-color);
+    color: var(--secondary-color);
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.chamado-form .form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chamado-form .form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.chamado-form .form-group input,
+.chamado-form .form-group textarea,
+.chamado-form .form-group select {
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: border 0.3s ease;
+}
+
+.chamado-form .form-group input:focus,
+.chamado-form .form-group textarea:focus,
+.chamado-form .form-group select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+.chamado-form .form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #45a049;
+}
+
+.submit-button:disabled {
+    background-color: #a5d6a7;
+    cursor: not-allowed;
+}
+
+
+@media (max-width: 768px) {
+    .chamado-form-container {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .chamado-form-container {
+        padding: 15px;
+    }
+}

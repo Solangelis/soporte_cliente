@@ -1,0 +1,277 @@
+:root {
+    --primary-color: #4CAF50;
+    --secondary-color: #ffffff;
+    --accent-color: #f44336;
+    --background-color: #f2f2f2;
+    --header-background: #4CAF50;
+    --footer-background: #333333;
+    --text-color: #333333;
+    --light-text-color: #ffffff;
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-family);
+    color: var(--text-color);
+}
+
+.home-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--header-background);
+    padding: 15px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    animation: fadeInDown 1s ease-out;
+}
+
+.navbar-logo h2 {
+    margin: 0;
+    color: var(--secondary-color);
+    font-size: 1.5em;
+}
+
+.navbar-menu {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar-menu li a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-size: 1em;
+    transition: color 0.3s ease;
+}
+
+.navbar-menu li a:hover {
+    color: #e0e0e0;
+}
+
+
+.navbar-toggle-checkbox {
+    display: none;
+}
+
+.navbar-toggle-label {
+    display: none;
+    color: var(--secondary-color);
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .navbar-menu {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background-color: var(--header-background);
+        flex-direction: column;
+        width: 200px;
+        padding: 20px;
+        display: none;
+        border-radius: 0 0 10px 10px;
+    }
+
+    .navbar-toggle-label {
+        display: block;
+    }
+
+    .navbar-toggle-checkbox:checked ~ .navbar-menu {
+        display: flex;
+    }
+}
+
+
+.home-header {
+    background-color: var(--header-background);
+    color: var(--secondary-color);
+    padding: 60px 20px;
+    text-align: center;
+    animation: fadeInUp 1s ease-out;
+}
+
+.home-header h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+.home-header p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+.home-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.home-button, .home-button-secondary {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+}
+
+.home-button {
+    background-color: var(--secondary-color);
+    color: var(--header-background);
+}
+
+.home-button:hover {
+    background-color: #e0e0e0;
+}
+
+.home-button-secondary {
+    background-color: var(--accent-color);
+    color: var(--secondary-color);
+}
+
+.home-button-secondary:hover {
+    background-color: #d32f2f;
+}
+
+
+.home-features {
+    background-color: var(--background-color);
+    padding: 60px 20px;
+    text-align: center;
+    animation: fadeInUp 1s ease-out;
+}
+
+.home-features h2 {
+    font-size: 2.5em;
+    margin-bottom: 40px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.feature-item {
+    background-color: var(--secondary-color);
+    padding: 30px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeInUp 1s ease-out;
+}
+
+.feature-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.feature-icon {
+    color: var(--primary-color);
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+.feature-item h3 {
+    font-size: 1.8em;
+    margin-bottom: 15px;
+}
+
+.feature-item p {
+    font-size: 1em;
+    color: #666666;
+}
+
+
+.home-about {
+    padding: 60px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    animation: fadeInUp 1s ease-out;
+}
+
+.home-about h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.home-about p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #555555;
+}
+
+.about-image {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    margin: 20px 0;
+    border-radius: 10px;
+}
+
+.about-icon {
+    color: var(--primary-color);
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+.home-footer {
+    background-color: var(--footer-background);
+    color: var(--light-text-color);
+    text-align: center;
+    padding: 20px;
+    margin-top: auto;
+    animation: fadeInUp 1s ease-out;
+}
+
+.home-footer p {
+    margin: 0;
+    font-size: 0.9em;
+}
+
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .navbar, .home-header, .home-features, .home-about, .home-footer, .feature-item {
+        animation: none;
+    }
+}
