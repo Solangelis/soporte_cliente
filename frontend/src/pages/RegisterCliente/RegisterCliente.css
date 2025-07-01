@@ -1,0 +1,219 @@
+:root {
+    --primary-color: #2196F3;
+    --secondary-color: #ffffff;
+    --background-color: #f5f7fa;
+    --input-background: #ffffff;
+    --input-border: #e1e5e9;
+    --input-focus-border: #2196F3;
+    --button-hover-color: #1976D2;
+    --error-color: #f44336;
+    --success-color: #4caf50;
+    --text-color: #333333;
+    --light-text-color: #666666;
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --shadow: 0 4px 12px rgba(33, 150, 243, 0.15);
+    --border-radius: 8px;
+}
+
+.register-cliente-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 50%, #90caf9 100%);
+    padding: 20px;
+    font-family: var(--font-family);
+}
+
+.register-cliente-form-container {
+    background-color: var(--secondary-color);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(33, 150, 243, 0.2);
+    max-width: 450px;
+    width: 100%;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.register-cliente-form-container h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--primary-color);
+    font-size: 2rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.register-cliente-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid var(--input-border);
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    font-family: var(--font-family);
+    background-color: var(--input-background);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--input-focus-border);
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+    transform: translateY(-2px);
+}
+
+.input-group input::placeholder {
+    color: var(--light-text-color);
+    font-weight: 400;
+}
+
+.input-group input:hover {
+    border-color: var(--primary-color);
+}
+
+.register-button {
+    background: linear-gradient(135deg, var(--primary-color), var(--button-hover-color));
+    color: var(--secondary-color);
+    border: none;
+    padding: 15px 30px;
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    font-weight: 600;
+    font-family: var(--font-family);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+}
+
+.register-button:hover {
+    background: linear-gradient(135deg, var(--button-hover-color), #1565C0);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+}
+
+.register-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(33, 150, 243, 0.3);
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 20px;
+    color: var(--light-text-color);
+    font-size: 14px;
+}
+
+.login-link a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.login-link a:hover {
+    color: var(--button-hover-color);
+    text-decoration: underline;
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.register-cliente-form-container {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .register-cliente-container {
+        padding: 15px;
+    }
+    
+    .register-cliente-form-container {
+        padding: 30px 25px;
+        margin: 10px;
+    }
+    
+    .register-cliente-form-container h1 {
+        font-size: 1.8rem;
+        margin-bottom: 25px;
+    }
+    
+    .input-group input {
+        padding: 12px 15px;
+        font-size: 15px;
+    }
+    
+    .register-button {
+        padding: 12px 25px;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .register-cliente-form-container {
+        padding: 25px 20px;
+    }
+    
+    .register-cliente-form-container h1 {
+        font-size: 1.6rem;
+    }
+    
+    .input-group input {
+        padding: 10px 12px;
+    }
+}
+
+/* Estados de validación */
+.input-group input:invalid:not(:placeholder-shown) {
+    border-color: var(--error-color);
+}
+
+.input-group input:valid:not(:placeholder-shown) {
+    border-color: var(--success-color);
+}
+
+/* Efectos adicionales */
+.register-cliente-form-container::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #2196F3, #21CBF3, #2196F3);
+    border-radius: 14px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.register-cliente-form-container:hover::before {
+    opacity: 0.1;
+}

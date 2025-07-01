@@ -1,139 +1,162 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const Chamado = require('../models/Chamado');
-const User = require('../models/User'); 
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const Cliente = require('../models/Cliente');
+const { verifyToken, requireAdmin, authorizeRole } = require('./middleware/authMiddleware');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const router = express.Router();
 
-const verifyToken = require('./middleware/authMiddleware');
-
-
-router.post('/', verifyToken, async (req, res) => {
-  const { subject, description, status } = req.body;
-  const userId = req.user.id; 
-
-  if (!subject || !description) {
+// Registro de cliente - Público
+router.post('/register', async (req, res) => {
+  const { name, email, password, phone } = req.body; 
+  
+  if (!name || !email || !password || !phone) {
     return res.status(400).json({ message: 'Todos os campos são obrigatórios.' });
   }
-
+  
+  if (password.length < 6) {
+    return res.status(400).json({ message: 'A senha deve ter pelo menos 6 caracteres.' });
+  }
+  
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({ message: 'Formato de e-mail inválido.' });
+  }
+  
   try {
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ message: 'Usuário não encontrado.' });
+    const existingCliente = await Cliente.findOne({ email });
+    if (existingCliente) {
+      return res.status(400).json({ message: 'E-mail já está em uso.' });
     }
 
-    const newChamado = new Chamado({
-      client: user._id, 
-      subject,
-      description,
-      status, 
+    const newCliente = new Cliente({ 
+      name, 
+      email, 
+      password, 
+      phone, 
+      role: 'cliente' 
     });
-
-    await newChamado.save();
-    res.status(201).json({ message: 'Chamado criado com sucesso.', chamado: newChamado });
-  } catch (error) {
-    console.error('Erro ao criar o chamado:', error);
-    res.status(500).json({ message: 'Erro interno do servidor.' });
-  }
-});
-
-
-router.get('/', verifyToken, async (req, res) => {
-  try {
-    const chamados = await Chamado.find({ client: req.user.id }).populate('client', 'name email client_id');
-    res.json(chamados);
-  } catch (error) {
-    console.error('Erro ao obter os chamados:', error);
-    res.status(500).json({ message: 'Erro interno do servidor.' });
-  }
-});
-
-router.get('/:id', verifyToken, async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ message: 'Formato de ID de chamado inválido.' });
-    }
-
-    const chamado = await Chamado.findById(id).populate('client', 'name email client_id');
-    if (!chamado) {
-      return res.status(404).json({ message: 'Chamado não encontrado.' });
-    }
-
     
-    if (chamado.client.toString() !== req.user.id) {
-      return res.status(401).json({ message: 'Não autorizado.' });
-    }
-
-    res.json(chamado);
-  } catch (error) {
-    console.error('Erro ao obter o chamado:', error);
-    res.status(500).json({ message: 'Erro interno do servidor.' });
-  }
-});
-
-router.put('/:id', verifyToken, async (req, res) => {
-  const { id } = req.params;
-  const { subject, description, status } = req.body;
-
-  if (!subject || !description || !status) {
-    return res.status(400).json({ message: 'Todos os campos são obrigatórios para atualizar.' });
-  }
-
-  try {
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ message: 'Formato de ID de chamado inválido.' });
-    }
-
-    const chamado = await Chamado.findById(id);
-
-    if (!chamado) {
-      return res.status(404).json({ message: 'Chamado não encontrado.' });
-    }
-
+    await newCliente.save();
     
-    if (chamado.client.toString() !== req.user.id) {
-      return res.status(401).json({ message: 'Não autorizado.' });
-    }
-
-   
-    chamado.subject = subject;
-    chamado.description = description;
-    chamado.status = status;
-
-    await chamado.save();
-    res.json({ message: 'Chamado atualizado com sucesso.', chamado });
+    res.status(201).json({ 
+      message: 'Cliente registrado com sucesso.',
+      cliente: {
+        id: newCliente._id,
+        name: newCliente.name,
+        email: newCliente.email,
+        client_id: newCliente.client_id
+      }
+    });
   } catch (error) {
-    console.error('Erro ao atualizar o chamado:', error);
+    console.error('Erro ao registrar cliente:', error);
     res.status(500).json({ message: 'Erro interno do servidor.' });
   }
 });
 
+// Login de cliente - Público
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
 
-router.delete('/:id', verifyToken, async (req, res) => {
-  const { id } = req.params;
+  if (!email || !password) {
+    return res.status(400).json({ message: 'E-mail e senha são obrigatórios.' });
+  }
 
   try {
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ message: 'Formato de ID de chamado inválido.' });
+    const cliente = await Cliente.findOne({ email });
+    if (!cliente) {
+      return res.status(401).json({ message: 'E-mail ou senha inválidos.' });
     }
 
-    const chamado = await Chamado.findById(id);
-
-    if (!chamado) {
-      return res.status(404).json({ message: 'Chamado não encontrado.' });
+    const isPasswordValid = await cliente.comparePassword(password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'E-mail ou senha inválidos.' });
     }
 
- 
-    if (chamado.client.toString() !== req.user.id) {
-      return res.status(401).json({ message: 'Não autorizado.' });
-    }
+    const token = jwt.sign(
+      { id: cliente._id, role: cliente.role }, 
+      process.env.JWT_SECRET, 
+      { expiresIn: '24h' }
+    );
 
-    await chamado.remove();
-    res.json({ message: 'Chamado excluído com sucesso.' });
+    res.json({ 
+      message: 'Login realizado com sucesso.',
+      token, 
+      user: { 
+        id: cliente._id, 
+        name: cliente.name, 
+        email: cliente.email, 
+        role: cliente.role,
+        client_id: cliente.client_id
+      } 
+    });
   } catch (error) {
-    console.error('Erro ao excluir chamado:', error);
+    console.error('Erro ao autenticar cliente:', error);
+    res.status(500).json({ message: 'Erro interno do servidor.' });
+  }
+});
+
+// Obtener información del cliente autenticado
+router.get('/me', verifyToken, authorizeRole('cliente'), async (req, res) => {
+  try {
+    const cliente = await Cliente.findById(req.user.id).select('-password');
+    if (!cliente) {
+      return res.status(404).json({ message: 'Cliente não encontrado.' });
+    }
+    res.json(cliente);
+  } catch (error) {
+    console.error('Erro ao obter informações do cliente:', error);
+    res.status(500).json({ message: 'Erro interno do servidor.' });
+  }
+});
+
+// Listar todos los clientes - Solo administradores
+router.get('/', verifyToken, requireAdmin, async (req, res) => {
+  try {
+    const { page = 1, limit = 10, search } = req.query;
+    
+    let query = {};
+    if (search) {
+      query = {
+        $or: [
+          { name: { $regex: search, $options: 'i' } },
+          { email: { $regex: search, $options: 'i' } }
+        ]
+      };
+    }
+
+    const clientes = await Cliente.find(query)
+      .select('-password')
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .sort({ createdAt: -1 });
+      
+    const total = await Cliente.countDocuments(query);
+    
+    res.json({
+      clientes,
+      totalPages: Math.ceil(total / limit),
+      currentPage: page,
+      total
+    });
+  } catch (error) {
+    console.error('Erro ao listar clientes:', error);
+    res.status(500).json({ message: 'Erro interno do servidor.' });
+  }
+});
+
+// Obtener cliente específico - Solo administradores
+router.get('/:id', verifyToken, requireAdmin, async (req, res) => {
+  try {
+    const cliente = await Cliente.findById(req.params.id).select('-password');
+    if (!cliente) {
+      return res.status(404).json({ message: 'Cliente não encontrado.' });
+    }
+    res.json(cliente);
+  } catch (error) {
+    console.error('Erro ao buscar cliente:', error);
     res.status(500).json({ message: 'Erro interno do servidor.' });
   }
 });

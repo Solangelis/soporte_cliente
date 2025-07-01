@@ -1,110 +1,205 @@
 .chamado-detail-container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 30px;
-    background-color: var(--secondary-color);
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 0;
+    background-color: var(--background-color, #f5f7fa);
+    min-height: calc(100vh - 40px);
 }
 
 .chamado-detail-header {
+    background: linear-gradient(135deg, #1976D2, #2196F3);
+    color: white;
+    padding: 20px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.15);
 }
 
 .back-button {
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
     text-decoration: none;
     display: flex;
     align-items: center;
-    gap: 5px;
-    transition: background-color 0.3s ease;
+    gap: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
 }
 
 .back-button:hover {
-    background-color: #45a049;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
 }
 
-.chamado-actions .action-button {
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-    padding: 10px 15px;
+.chamado-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.action-button {
+    padding: 10px 20px;
     border: none;
-    border-radius: 5px;
-    text-decoration: none;
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-decoration: none;
     display: flex;
     align-items: center;
-    gap: 5px;
-    margin-left: 10px;
-    transition: background-color 0.3s ease;
+    gap: 8px;
 }
 
-.chamado-actions .action-button.edit {
-    background-color: #2196F3;
+.action-button.edit {
+    background: linear-gradient(135deg, #FF9800, #F57C00);
+    color: white;
 }
 
-.chamado-actions .action-button.edit:hover {
-    background-color: #0b7dda;
+.action-button.delete {
+    background: linear-gradient(135deg, #f44336, #D32F2F);
+    color: white;
 }
 
-.chamado-actions .action-button.delete {
-    background-color: var(--accent-color);
+.action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
-.chamado-actions .action-button.delete:hover {
-    background-color: #d32f2f;
+.chamado-detail-main {
+    background: white;
+    padding: 30px;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-.chamado-detail-main h2 {
-    margin-top: 0;
-    color: var(--primary-color);
+.chamado-info h1 {
+    color: #1976D2;
+    margin-bottom: 20px;
+    font-size: 1.8em;
 }
 
-.chamado-detail-main p {
-    font-size: 1em;
-    margin: 10px 0;
-    color: #555555;
-}
-
-.loading, .error {
+.chamado-meta {
     display: flex;
-    justify-content: center;
+    gap: 20px;
     align-items: center;
-    height: 100%;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.status-badge {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-aberto {
+    background-color: #e3f2fd;
+    color: #1976D2;
+}
+
+.status-em-andamento {
+    background-color: #fff3e0;
+    color: #F57C00;
+}
+
+.status-fechado {
+    background-color: #e8f5e8;
+    color: #388E3C;
+}
+
+.chamado-date {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.chamado-content h3 {
+    color: #1976D2;
+    margin-bottom: 15px;
     font-size: 1.2em;
 }
 
-.loading span {
-    margin-left: 10px;
+.description-box {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid #2196F3;
+    margin-bottom: 30px;
+    line-height: 1.6;
+    white-space: pre-wrap;
 }
 
-/* Responsividad */
+.chamado-details {
+    display: grid;
+    gap: 15px;
+}
+
+.detail-item {
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 3px solid #2196F3;
+}
+
+.detail-item strong {
+    color: #1976D2;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.loading, .error {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 10px;
+    margin: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #2196F3;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 @media (max-width: 768px) {
+    .chamado-detail-container {
+        margin: 10px;
+    }
+    
     .chamado-detail-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+    
+    .chamado-actions {
+        justify-content: center;
+    }
+    
+    .chamado-detail-main {
+        padding: 20px;
+    }
+    
+    .chamado-meta {
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
-    }
-
-    .chamado-actions .action-button {
-        margin-left: 0;
-    }
-}
-
-@media (max-width: 480px) {
-    .chamado-detail-container {
-        padding: 20px;
-    }
-
-    .back-button, .action-button {
-        padding: 8px 12px;
-        font-size: 0.9em;
     }
 }

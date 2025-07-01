@@ -4,9 +4,6 @@
     --accent-color: #FF5722;
     --background-color: #f5f7fa;
     --header-background: linear-gradient(135deg, #1976D2, #2196F3);
-    --footer-background: #1565C0;
-    --text-color: #333333;
-    --light-text-color: #ffffff;
     --success-color: #4CAF50;
     --warning-color: #FF9800;
     --error-color: #f44336;
@@ -16,18 +13,11 @@
     --border-radius: 8px;
 }
 
-body, html {
-    margin: 0;
-    padding: 0;
-    font-family: var(--font-family);
-    color: var(--text-color);
-    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-}
-
 .dashboard-container {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
 }
 
 .dashboard-header {
@@ -46,23 +36,6 @@ body, html {
     text-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.logout-button {
-    background-color: var(--accent-color);
-    color: var(--secondary-color);
-    padding: 10px 20px;
-    border: none;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 500;
-}
-
-.logout-button:hover {
-    background-color: #E64A19;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
 .dashboard-main {
     flex: 1;
     padding: 40px;
@@ -71,11 +44,20 @@ body, html {
 
 .dashboard-actions {
     display: flex;
-    justify-content: flex-end;
-    margin-bottom: 20px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
-.add-button {
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-primary {
     background: linear-gradient(135deg, var(--primary-color), #1976D2);
     color: var(--secondary-color);
     padding: 12px 24px;
@@ -89,12 +71,36 @@ body, html {
     transition: all 0.3s ease;
     font-weight: 500;
     box-shadow: var(--shadow);
+    cursor: pointer;
 }
 
-.add-button:hover {
+.btn-primary:hover {
     background: linear-gradient(135deg, #1976D2, #1565C0);
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(33, 150, 243, 0.3);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--success-color), #388E3C);
+    color: var(--secondary-color);
+    padding: 12px 24px;
+    border: none;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #388E3C, #2E7D32);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(76, 175, 80, 0.3);
 }
 
 .chamados-table {
@@ -153,98 +159,119 @@ body, html {
     color: var(--success-color);
 }
 
-.action-buttons {
+.table-actions {
     display: flex;
     gap: 8px;
+    justify-content: center;
 }
 
-.btn-view, .btn-edit, .btn-delete {
-    padding: 6px 12px;
+.btn-view, .btn-edit {
+    padding: 8px 16px;
     border: none;
     border-radius: var(--border-radius);
     cursor: pointer;
-    font-size: 0.8em;
+    font-size: 0.85em;
+    font-weight: 500;
     transition: all 0.3s ease;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
+    min-width: 80px;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .btn-view {
-    background-color: var(--info-color);
+    background: linear-gradient(135deg, var(--info-color), #0097A7);
     color: white;
 }
 
 .btn-edit {
-    background-color: var(--warning-color);
+    background: linear-gradient(135deg, var(--warning-color), #F57C00);
     color: white;
 }
 
-.btn-delete {
-    background-color: var(--error-color);
-    color: white;
-}
-
-.btn-view:hover, .btn-edit:hover, .btn-delete:hover {
+.btn-view:hover {
+    background: linear-gradient(135deg, #0097A7, #00838F);
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 12px rgba(0, 188, 212, 0.3);
 }
 
-.loading, .error {
-    display: flex;
-    justify-content: center;
+.btn-edit:hover {
+    background: linear-gradient(135deg, #F57C00, #EF6C00);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+}
+
+/* Mejorar la apariencia de los enlaces en general */
+.btn-primary, .btn-success {
+    background: linear-gradient(135deg, var(--primary-color), #1976D2);
+    color: var(--secondary-color);
+    padding: 12px 24px;
+    border: none;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    font-size: 1em;
+    font-weight: 600;
+    display: inline-flex;
     align-items: center;
-    height: 100%;
-    font-size: 1.2em;
+    gap: 8px;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.loading span {
-    margin-left: 10px;
+.btn-primary:hover, .btn-success:hover {
+    background: linear-gradient(135deg, #1976D2, #1565C0);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
 }
 
-/* Responsividad */
+.btn-success {
+    background: linear-gradient(135deg, var(--success-color), #388E3C);
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #388E3C, #2E7D32);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.empty-state h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.empty-state p {
+    color: #666;
+    margin-bottom: 25px;
+}
+
 @media (max-width: 768px) {
-    .dashboard-header {
+    .dashboard-actions {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
+        align-items: stretch;
     }
-
-    .dashboard-main {
-        padding: 20px;
+    
+    .action-buttons {
+        justify-content: center;
     }
-
+    
+    .chamados-table {
+        font-size: 0.9em;
+    }
+    
     .chamados-table th, .chamados-table td {
         padding: 10px 15px;
-    }
-
-    .action-button {
-        font-size: 1em;
-    }
-}
-
-@media (max-width: 480px) {
-    .dashboard-header h1 {
-        font-size: 1.5em;
-    }
-
-    .logout-button {
-        padding: 8px 16px;
-        font-size: 0.9em;
-    }
-
-    .add-button {
-        padding: 8px 16px;
-        font-size: 0.9em;
-    }
-
-    .chamados-table th, .chamados-table td {
-        padding: 8px 10px;
-        font-size: 0.9em;
-    }
-
-    .action-button {
-        font-size: 1em;
     }
 }

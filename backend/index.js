@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const authRoutes = require('./routes/authRoutes'); 
 const clienteRoutes = require('./routes/clienteRoutes'); 
+const userRoutes = require('./routes/userRoutes');
 const chamadoRoutes = require('./routes/chamadoRoutes'); 
 const cors = require('cors'); 
 
@@ -10,10 +11,14 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-console.log('JWT_SECRET:', process.env.JWT_SECRET);
+if (process.env.NODE_ENV !== 'production') {
+  console.log('JWT_SECRET:', process.env.JWT_SECRET);
+}
+
 
 
 app.use(express.json());
+
 
 
 app.use(cors({
@@ -36,6 +41,8 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 app.use('/api/auth', authRoutes); 
 app.use('/api/clientes', clienteRoutes); 
 app.use('/api/chamados', chamadoRoutes); 
+app.use('/api/usuarios', userRoutes); 
+ 
 
 
 app.get('/', (req, res) => {
@@ -46,3 +53,5 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
+
+
